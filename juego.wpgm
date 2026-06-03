@@ -1,12 +1,15 @@
 import wollok.game.*
 import extras.* 
+import level_1.*
 
 program guitarHero {
+        game.title("Guitar Hero")
         game.width(10)
         game.height(10)
-        game.title("Guitar Hero")
-        const nota1 = new NotaMusical(position = game.at(5, 10))
-        game.addVisual(nota1)
-        game.onTick(1000, "movimiento de nota", {nota1.caer()})
+        
+
+        // Llamo al método init del nivel 1
+        level1.init()
+        
         game.start()
 }
