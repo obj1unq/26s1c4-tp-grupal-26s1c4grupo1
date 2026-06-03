@@ -1,4 +1,4 @@
-import wollok.game.*
+
 
 class NotaMusical {
     var property position
@@ -7,3 +7,4 @@ class NotaMusical {
         position = game.at(position.x(), position.y() - 1)
     }
 }
+
