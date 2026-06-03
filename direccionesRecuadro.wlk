@@ -1,18 +1,6 @@
 object tablero {
     method dentro(position) {
-        return position.x().between(0, game.width() -2) 
-    }
-}
-
-object izquierda {
-    method siguiente(position) {
-        return position.left(1)
-    }
-}
-object derecha {
-    method siguiente(position) {
-        return position.right(1)
-        
+        return position.y().between(0, game.height() -2) 
     }
 }
 

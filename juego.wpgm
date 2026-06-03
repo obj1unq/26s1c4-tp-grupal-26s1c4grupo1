@@ -1,17 +1,19 @@
 import wollok.game.*
 import recuadroVerde.*
+import configuracionJuego.*
+
 import direccionesRecuadro.*
 
-import extras.* 
+import notasMusicales.* 
 
 program guitarHero {
         game.width(10)
         game.height(10)
         game.title("Guitar Hero")
-        const nota1 = new NotaMusical(position = game.at(5, 10))
+        const nota1 = new NotaMusical(position = game.at(10, 5))
         game.addVisual(nota1)
         game.addVisual(recuadroVerde)
         game.onTick(1000, "movimiento de nota", {nota1.caer()})
-        juego.configurarJuego()
+        juego.direccionesRecuadro()
         game.start()
 }
