@@ -9,10 +9,16 @@ object level1 {
         const notas = (4..8).map({ x => new NotaMusical(position = game.at(x, 10)) })
 
         // Agrego cada nota al juego
-        notas.forEach({ nota => game.addVisual(nota) })
+        notas.forEach({ nota => self.inicializarNota(nota) })
+    }
 
-        // Le aplico el movimiento de caer a cada nota
-        game.onTick(1000, "movimiento de nota", { notas.forEach({ nota => nota.caer() }) })
+    method inicializarNota(nota) {
+        // Inicializamos la nota agregandola al tablero
+        game.addVisual(nota)
+        const velocidadRandom = (200..800).anyOne() // Velocidad random para la nota
+
+        // Le asignamos una velocidad random provisional
+        game.onTick(velocidadRandom, "movimiento_", { nota.caer() })
     }
 }
 
