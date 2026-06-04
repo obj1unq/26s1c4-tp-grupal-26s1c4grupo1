@@ -1,12 +1,25 @@
 import wollok.game.*
-import extras.* 
+import extras.*
 
 program guitarHero {
         game.width(10)
         game.height(10)
         game.title("Guitar Hero")
-        const nota1 = new NotaMusical(position = game.at(5, 10))
-        game.addVisual(nota1)
-        game.onTick(1000, "movimiento de nota", {nota1.caer()})
-        game.start()
+
+        game.addVisual(barraEnergia)
+        game.addVisual(receptorVerde)
+
+        const notaComun = new NotaMusical(position = game.at(5, 9))
+        game.addVisual(notaComun)
+
+        game.onTick(500, "movimientoNotas", { notaComun.caer() })
+
+        keyboard.a().onPressDo({
+                if (notaComun.position().equals(receptorVerde.position())) {
+                        notaComun.serTocada()
+                        barraEnergia.sumar(100)
+                }
+       })
+
+       game.start()
 }
