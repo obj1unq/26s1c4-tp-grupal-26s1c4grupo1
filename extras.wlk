@@ -1,4 +1,4 @@
-import wollok.game.*
+
 
 class NotaMusical {
     var property position
