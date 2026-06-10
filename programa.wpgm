@@ -1,0 +1,7 @@
+import juego.*
+
+import extras.* 
+
+program guitarHero {
+       juego.iniciar()
+}
