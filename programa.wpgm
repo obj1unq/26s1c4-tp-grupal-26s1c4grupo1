@@ -1,6 +1,6 @@
 import juego.*
 
-import extras.* 
+import letras.* 
 
 program guitarHero {
        juego.iniciar()
