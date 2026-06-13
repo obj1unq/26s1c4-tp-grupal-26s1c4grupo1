@@ -1,5 +1,9 @@
-import recuadroVerde.*
+import letras.*
 import direccionesRecuadro.*
+import nivel1.*
+import sectorDeAgarre.*
+
+
 import niveles.*
 import menus.*
 
@@ -33,5 +37,14 @@ object juego {
 
 //revisar para no repetir codigo
 
-
- //revisar como hacer para que ya aparezcan las teclas
+object modoFacil {
+  method iniciar() {
+  game.removeVisual(menu)
+  game.addVisual(fondoNivel1)
+  keyboard.a().onPressDo({sectorDeAgarreTeclaA.intentarAgarrar()})
+  keyboard.w().onPressDo({sectorDeAgarreTeclaW.intentarAgarrar()})
+  keyboard.s().onPressDo({sectorDeAgarreTeclaS.intentarAgarrar()})
+  keyboard.d().onPressDo({sectorDeAgarreTeclaD.intentarAgarrar()})
+  level1.init()
+  }
+} 
