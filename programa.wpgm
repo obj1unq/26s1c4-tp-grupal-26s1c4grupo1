@@ -1,7 +1,18 @@
 import juego.*
-
 import letras.* 
+import extras.* 
 
 program guitarHero {
        juego.iniciar()
+       keyboard.r().onPressDo({ juego.iniciar() })
 }
+
+// program pruebaFondo {
+//     game.width(10)
+//     game.height(10)
+    
+//     // Intenta levantar la imagen directamente
+//     game.boardGround("nivel3.jpg") 
+    
+//     game.start()
+// }

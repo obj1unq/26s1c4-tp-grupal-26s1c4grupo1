@@ -4,34 +4,38 @@ import nivel1.*
 import sectorDeAgarre.*
 
 
+import niveles.*
+import menus.*
 
 
 object juego {
-  
+  const niveles = [nivel1, nivel2, nivel3] 
   
   method iniciar() {
-    game.width(10)
-    game.height(10)
+    game.width(15)
+    game.height(15)
     game.title("Guitar Hero")
     game.addVisual(menu)
-    keyboard.num1().onPressDo({modoFacil.iniciar()})
+    self.elegirNivel()
     game.start()
 
   }
   
+  method elegirNivel(){
+    keyboard.num1().onPressDo({self.cargarNivel(1)})
+    keyboard.num2().onPressDo({self.cargarNivel(2)})
+    keyboard.num3().onPressDo({self.cargarNivel(3)})
+  }
+
+  method cargarNivel(nivel){
+    const nivelElegido = niveles.get(nivel - 1)
+    nivelElegido.iniciar()
+  }
 
 }   
 
 
-object menu {
-  method image() = "menu1.jpg"   
-  method position() = game.origin()
-}
 //revisar para no repetir codigo
-object fondoNivel1 {
-    method image() = "fondoGuitar.jpg"   
-    method position() = game.origin()
-}
 
 object modoFacil {
   method iniciar() {
