@@ -40,7 +40,7 @@ object juego {
 object modoFacil {
   method iniciar() {
   game.removeVisual(menu)
-  game.addVisual(fondoNivel1)
+  //game.addVisual(fondoNivel1)
   keyboard.a().onPressDo({sectorDeAgarreTeclaA.intentarAgarrar()})
   keyboard.w().onPressDo({sectorDeAgarreTeclaW.intentarAgarrar()})
   keyboard.s().onPressDo({sectorDeAgarreTeclaS.intentarAgarrar()})
