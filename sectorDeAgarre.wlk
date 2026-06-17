@@ -3,8 +3,8 @@ class SectorDeAgarre {
     method agarrar() {
         const hayTecla = game.uniqueCollider(self)
         if(hayTecla != null) {
+            hayTecla.puntosAObtener()
             game.removeVisual(hayTecla)
-            //tecla.puntosAObtener()
         }
     }
 

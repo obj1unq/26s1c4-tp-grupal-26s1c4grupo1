@@ -1,12 +1,21 @@
-
+import puntos.*
 
 class NotaMusical {
-    var property position
-    method image() 
+   var property position
+   method image() 
 
    method caer() {
     position = game.at(position.x() - 1, position.y())
-    }   
+    } 
+
+    method iniciarMovimiento() {
+     const velocidadRandom = (300..800).anyOne() 
+     game.onTick(velocidadRandom, "caida_" + self.identity().toString(), { self.caer() })
+    } 
+
+    method puntosAObtener() {
+        marcador.sumar(100) 
+    } 
 }
 
 class TeclaA inherits NotaMusical{
