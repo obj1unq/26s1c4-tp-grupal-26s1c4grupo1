@@ -3,6 +3,7 @@ import wollok.game.*
 import letras.*
 import puntos.*
 import sectorDeAgarre.*
+import juego.*
 
 class Fondo {
     const property image
@@ -13,6 +14,7 @@ class Nivel {
     method iniciar(){
         game.clear()
         self.configurarFondo()
+        self.configurarTeclas()
         
         marcador.reiniciar()
         game.addVisual(marcador)
@@ -25,6 +27,15 @@ class Nivel {
         const fondoDelNivel = new Fondo(image = self.rutaImagen())
         game.addVisual(fondoDelNivel)
     }
+
+    method configurarTeclas() {
+        keyboard.a().onPressDo({ sectorDeAgarreTeclaA.intentarAgarrar() })
+        keyboard.w().onPressDo({ sectorDeAgarreTeclaW.intentarAgarrar() })
+        keyboard.s().onPressDo({ sectorDeAgarreTeclaS.intentarAgarrar() })
+        keyboard.d().onPressDo({ sectorDeAgarreTeclaD.intentarAgarrar() })
+        keyboard.space().onPressDo({ sectorDeAgarreTeclaSpace.intentarAgarrar() })
+        keyboard.r().onPressDo({ juego.cargarElMenu(menuPrincipal) })
+    } 
 
     method configurarSectorDeAgarre ()
 
@@ -65,11 +76,9 @@ object nivel1 inherits Nivel {
         sectorDeAgarreTeclaW.position(game.at(2,4))
         sectorDeAgarreTeclaS.position(game.at(2,3))
         sectorDeAgarreTeclaD.position(game.at(2,1))
-        game.addVisual(sectorDeAgarreTeclaA)
-        game.addVisual(sectorDeAgarreTeclaS)
-        game.addVisual(sectorDeAgarreTeclaW)
-        game.addVisual(sectorDeAgarreTeclaD)
-        game.addVisual(sectorDeAgarreTeclaSpace)
+        const sectoresDeAgarre = #{sectorDeAgarreTeclaSpace, sectorDeAgarreTeclaA, sectorDeAgarreTeclaW, sectorDeAgarreTeclaS, sectorDeAgarreTeclaD}
+        
+        sectoresDeAgarre.forEach({ sector => game.addVisual(sector) })
     }
 }
 

@@ -10,9 +10,9 @@ class SectorDeAgarre {
 
     method intentarAgarrar() {
         try {
-        self.agarrar()
+            self.agarrar()
         } catch e : wollok.lang.Exception {
-            
+            // Vacio
         }
     }
     
