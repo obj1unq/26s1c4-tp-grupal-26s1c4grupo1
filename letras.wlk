@@ -2,6 +2,8 @@ import puntos.*
 
 class NotaMusical {
    var property position
+
+
    method image() 
 
    method caer() {
@@ -9,7 +11,7 @@ class NotaMusical {
     } 
 
     method iniciarMovimiento() {
-     const velocidadRandom = (300..800).anyOne() 
+     const velocidadRandom = (300..450).anyOne() 
      game.onTick(velocidadRandom, "caida_" + self.identity().toString(), { self.caer() })
     } 
 
@@ -32,4 +34,7 @@ class TeclaS inherits NotaMusical{
 
 class TeclaD inherits NotaMusical {
     override method image() = "tecla_dFin.jpg"
+}
+class TeclaSpace inherits NotaMusical {
+    override method image() = "tecla_dSpace.png"
 }
