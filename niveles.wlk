@@ -43,6 +43,20 @@ class Nivel {
     method rutaImagen()
     method cargarNotas() 
     method iniciarMusica() 
+
+    method lanzarTeclas(notas){
+        var contador = 0
+        const letrasMaximo = 10
+        if ( contador < letrasMaximo) {
+            const notaActual = notas.randomized().first()
+            notas.remove(notaActual)
+            game.addVisual(notaActual)
+            notaActual.iniciarMovimiento()
+            contador += 1
+        } else {
+            game.removeTickEvent("generador_notas")
+        }
+    }
 }
 object nivel1 inherits Nivel {
     override method rutaImagen() = "nivel1.jpg"
@@ -62,20 +76,22 @@ object nivel1 inherits Nivel {
         const notasS     = (1..5).map({ i => new TeclaS(position = game.at(14, 3)) })
         const notasD     = (1..5).map({ i => new TeclaD(position = game.at(14, 1)) })
         
-
+        
         const todasLasNotas = notasA + notasW + notasS + notasD + notasSpace
+        var contador = 0
+        const letrasMaximo = 10
 
-        todasLasNotas.forEach({ nota => 
-            game.addVisual(nota)
-            nota.iniciarMovimiento() 
-        })
-    }
+        game.onTick(1500, "generador_notas", { self.lanzarTeclas(todasLasNotas) })    
+    
+    } 
+
+
     override method configurarSectorDeAgarre(){
-        sectorDeAgarreTeclaSpace.position(game.at(2,7))
-        sectorDeAgarreTeclaA.position(game.at(2,6))
-        sectorDeAgarreTeclaW.position(game.at(2,4))
-        sectorDeAgarreTeclaS.position(game.at(2,3))
-        sectorDeAgarreTeclaD.position(game.at(2,1))
+        const sectorDeAgarreTeclaSpace = new SectorDeAgarreTeclaSpace(position = game.at(2,7)) 
+        const sectorDeAgarreTeclaA = new SectorDeAgarreTeclaSpace(position = game.at(2,6)) 
+        const sectorDeAgarreTeclaW = new SectorDeAgarreTeclaSpace(position = game.at(2,4)) 
+        const sectorDeAgarreTeclaS = new SectorDeAgarreTeclaSpace(position = game.at(2,3)) 
+        const sectorDeAgarreTeclaD = new SectorDeAgarreTeclaSpace(position = game.at(2,1)) 
         const sectoresDeAgarre = #{sectorDeAgarreTeclaSpace, sectorDeAgarreTeclaA, sectorDeAgarreTeclaW, sectorDeAgarreTeclaS, sectorDeAgarreTeclaD}
         
         sectoresDeAgarre.forEach({ sector => game.addVisual(sector) })
@@ -109,11 +125,17 @@ object nivel2 inherits Nivel {
     }
 
     override method configurarSectorDeAgarre(){
-        sectorDeAgarreTeclaSpace.position(game.at(2,8))
-        sectorDeAgarreTeclaA.position(game.at(2,7))
-        sectorDeAgarreTeclaW.position(game.at(2,5))
-        sectorDeAgarreTeclaS.position(game.at(2,3))
-        sectorDeAgarreTeclaD.position(game.at(2,1))
+        const sectorDeAgarreTeclaSpace = new SectorDeAgarreTeclaSpace(position = game.at(2,7)) 
+        const sectorDeAgarreTeclaA = new SectorDeAgarreTeclaSpace(position = game.at(2,6)) 
+        const sectorDeAgarreTeclaW = new SectorDeAgarreTeclaSpace(position = game.at(2,4)) 
+        const sectorDeAgarreTeclaS = new SectorDeAgarreTeclaSpace(position = game.at(2,3)) 
+        const sectorDeAgarreTeclaD = new SectorDeAgarreTeclaSpace(position = game.at(2,1)) 
+        
+        sectorDeAgarreTeclaSpace.position() //game.at(2,8)
+        sectorDeAgarreTeclaA.position() //game.at(2,7)
+        sectorDeAgarreTeclaW.position() //game.at(2,5)
+        sectorDeAgarreTeclaS.position() //game.at(2,3)
+        sectorDeAgarreTeclaD.position() //game.at(2,1)
         game.addVisual(sectorDeAgarreTeclaA)
         game.addVisual(sectorDeAgarreTeclaS)
         game.addVisual(sectorDeAgarreTeclaW)

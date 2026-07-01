@@ -1,5 +1,5 @@
 import letras.*
-import direccionesRecuadro.*
+
 import sectorDeAgarre.*
 import niveles.*
 import menus.*

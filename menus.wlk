@@ -1,4 +1,3 @@
-import direccionesRecuadro.*
 import niveles.*
 import wollok.game.*
 import juego.*

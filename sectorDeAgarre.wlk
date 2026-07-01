@@ -1,5 +1,7 @@
 class SectorDeAgarre {
- 
+    
+    var property position 
+
     method agarrar() {
         const hayTecla = game.uniqueCollider(self)
         hayTecla.puntosAObtener()
@@ -18,26 +20,26 @@ class SectorDeAgarre {
     
 }
 
-object sectorDeAgarreTeclaW inherits SectorDeAgarre {
-    var property position = game.at(0,0)
+class SectorDeAgarreTeclaW inherits SectorDeAgarre {
+    
 
 }
 
-object sectorDeAgarreTeclaA inherits SectorDeAgarre {
-    var property position = game.at(0,0)
+class SectorDeAgarreTeclaA inherits SectorDeAgarre {
+    
      
 }
 
-object sectorDeAgarreTeclaS inherits SectorDeAgarre {
-    var property position = game.at(0,0)
+class SectorDeAgarreTeclaS inherits SectorDeAgarre {
+    
      
 }
 
-object sectorDeAgarreTeclaD inherits SectorDeAgarre {
-    var property position = game.at(0,0)
+class SectorDeAgarreTeclaD inherits SectorDeAgarre {
+    
      
 }
-object sectorDeAgarreTeclaSpace inherits SectorDeAgarre {
-    var property position = game.at(0,0)
+class SectorDeAgarreTeclaSpace inherits SectorDeAgarre {
+    
      
 }

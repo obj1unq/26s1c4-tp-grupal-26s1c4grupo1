@@ -18,6 +18,8 @@ class NotaMusical {
     method puntosAObtener() {
         marcador.sumar(100) 
     } 
+
+    
 }
 
 class TeclaA inherits NotaMusical{
