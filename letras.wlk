@@ -35,7 +35,7 @@ class TeclaS inherits NotaMusical{
 }
 
 class TeclaD inherits NotaMusical {
-    override method image() = "tecla_dFin.jpg"
+    override method image() = "tecla_dFin.png"
 }
 class TeclaSpace inherits NotaMusical {
     override method image() = "tecla_dSpace.png"
