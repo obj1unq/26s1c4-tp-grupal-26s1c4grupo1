@@ -17,7 +17,9 @@ class Nivel {
     var property sectorS = null
     var property sectorD = null
     var property sectorSpace = null
-    
+    const property notasEnPantalla = []
+
+
     method iniciar(){
         game.clear()
         self.configurarFondo()
@@ -30,7 +32,12 @@ class Nivel {
         self.cargarNotas()
         self.iniciarMusica()
 
-        self.IniciarVidas()
+        self.iniciarVidas()
+        game.onTick(30, "movimiento_global", { self.actualizarMovimiento() })
+    }
+
+    method actualizarMovimiento() {
+        notasEnPantalla.forEach({ nota => nota.caer() })
     }
 
     method configurarFondo() {
@@ -69,7 +76,7 @@ class Nivel {
         }
     }
 
-    method IniciarVidas() {
+    method iniciarVidas() {
         game.addVisual(new Corazon(position = game.at(17,8)))
         game.addVisual(new Corazon(position = game.at(15,8)))
         game.addVisual(new Corazon(position = game.at(13,8)))

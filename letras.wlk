@@ -2,17 +2,17 @@ import puntos.*
 
 class NotaMusical {
    var property position
-
    var property fueAtrapada = false
+   const pasoDeMovimiento = 0.1
 
    method image() 
 
    method caer() {
-    position = game.at(position.x() - 1, position.y())
+    position = game.at(position.x() - pasoDeMovimiento, position.y())
     } 
 
     method iniciarMovimiento() {
-     const velocidadRandom = (300..450).anyOne() 
+     const velocidadRandom = (20..45).anyOne() 
      game.onTick(velocidadRandom, "caida_" + self.identity().toString(), { self.caer() })
     } 
 
