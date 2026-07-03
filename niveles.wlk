@@ -4,6 +4,7 @@ import letras.*
 import puntos.*
 import sectorDeAgarre.*
 import juego.*
+import vidas.*
 
 class Fondo {
     const property image
@@ -21,6 +22,8 @@ class Nivel {
         
         self.cargarNotas()
         self.iniciarMusica()
+
+        self.IniciarVidas()
     }
 
     method configurarFondo() {
@@ -57,6 +60,14 @@ class Nivel {
             game.removeTickEvent("generador_notas")
         }
     }
+
+    method IniciarVidas() {
+        game.addVisual(new Corazon(position = game.at(17,8)))
+        game.addVisual(new Corazon(position = game.at(15,8)))
+        game.addVisual(new Corazon(position = game.at(13,8)))
+       
+    } 
+                            
 }
 object nivel1 inherits Nivel {
     override method rutaImagen() = "nivel1.jpg"
