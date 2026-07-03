@@ -1,21 +1,22 @@
+import puntos.*
 class SectorDeAgarre {
     
     var property position 
 
     method agarrar() {
         const hayTecla = game.uniqueCollider(self)
-        hayTecla.puntosAObtener()
-        game.removeVisual(hayTecla)
+        if (hayTecla != null) {
+            hayTecla.puntosAObtener() 
+            game.removeVisual(hayTecla)
+        } else {
+            marcador.sumar(-50) 
+        }
         
     }
 
 
     method intentarAgarrar() {
-        try {
-            self.agarrar()
-        } catch e : wollok.lang.Exception {
-            // Vacio
-        }
+        self.agarrar()
     }
     
 }

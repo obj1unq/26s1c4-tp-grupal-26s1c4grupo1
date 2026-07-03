@@ -1,3 +1,5 @@
+import vidas.*
+import vidas.Corazon
 import puntos.*
 
 class NotaMusical {
@@ -7,15 +9,27 @@ class NotaMusical {
    method image() 
 
    method caer() {
-    position = game.at(position.x() - 1, position.y())
+      position = game.at(position.x() - 1, position.y())
+      if (position.x() < 2) {
+            self.pasarseDeLargo()
+        }
     } 
+
+    method pasarseDeLargo() {
+        game.removeTickEvent(self.nombreTick()) 
+        game.removeVisual(self)
+        administradorDeVidas.perderVida()                 
+    }
+
+    method nombreTick() = "caida_" + self.identity().toString()
 
     method iniciarMovimiento() {
      const velocidadRandom = (300..450).anyOne() 
-     game.onTick(velocidadRandom, "caida_" + self.identity().toString(), { self.caer() })
+     game.onTick(velocidadRandom, self.nombreTick(), { self.caer() })
     } 
 
     method puntosAObtener() {
+        game.removeTickEvent(self.nombreTick())
         marcador.sumar(100) 
     } 
 

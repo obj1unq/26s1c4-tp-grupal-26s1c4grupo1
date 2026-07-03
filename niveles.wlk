@@ -12,6 +12,7 @@ class Fondo {
 }
 
 class Nivel {
+    method cancion()
     method iniciar(){
         game.clear()
         self.configurarFondo()
@@ -32,11 +33,11 @@ class Nivel {
     }
 
     method configurarTeclas() {
-        keyboard.a().onPressDo({ sectorDeAgarreTeclaA.intentarAgarrar() })
-        keyboard.w().onPressDo({ sectorDeAgarreTeclaW.intentarAgarrar() })
-        keyboard.s().onPressDo({ sectorDeAgarreTeclaS.intentarAgarrar() })
-        keyboard.d().onPressDo({ sectorDeAgarreTeclaD.intentarAgarrar() })
-        keyboard.space().onPressDo({ sectorDeAgarreTeclaSpace.intentarAgarrar() })
+        keyboard.a().onPressDo({ SectorDeAgarreTeclaA.intentarAgarrar() })
+        keyboard.w().onPressDo({ SectorDeAgarreTeclaW.intentarAgarrar() })
+        keyboard.s().onPressDo({ SectorDeAgarreTeclaS.intentarAgarrar() })
+        keyboard.d().onPressDo({ SectorDeAgarreTeclaD.intentarAgarrar() })
+        keyboard.space().onPressDo({ SectorDeAgarreTeclaSpace.intentarAgarrar() })
         keyboard.r().onPressDo({ juego.cargarElMenu(menuPrincipal) })
     } 
 
@@ -45,7 +46,11 @@ class Nivel {
 
     method rutaImagen()
     method cargarNotas() 
-    method iniciarMusica() 
+    method iniciarMusica() {
+        self.cancion().shouldLoop(true)
+        self.cancion().volume(0.5)
+        game.schedule(100, { self.cancion().play() })
+    }    
 
     method lanzarTeclas(notas){
         var contador = 0
@@ -72,13 +77,8 @@ class Nivel {
 object nivel1 inherits Nivel {
     override method rutaImagen() = "nivel1.jpg"
 
-    const cancion = game.sound("musicaNivel1.mp3") // Tenemos que ver que cancion elejimos
+    override method cancion() = game.sound("musicaNivel1.mp3")
 
-    override method iniciarMusica() {
-        cancion.shouldLoop(true)
-        cancion.volume(0.5)
-        game.schedule(100, { cancion.play() })
-    }
 
     override method cargarNotas() {
         const notasSpace = (1..5).map({ i => new TeclaSpace(position = game.at(14, 7)) })
@@ -112,13 +112,7 @@ object nivel1 inherits Nivel {
 object nivel2 inherits Nivel {
     override method rutaImagen() = "nivel2.jpg"
 
-    const cancion = game.sound("musicaNivel2.mp3")
-
-    override method iniciarMusica() {
-        cancion.shouldLoop(true)
-        cancion.volume(0.5)
-        game.schedule(100, { cancion.play() }) // este tengo duda si no ponerlo en la clase porque se repite codigo
-    }
+    override method cancion() = game.sound("musicaNivel2.mp3")
 
     override method cargarNotas() {
         const notasSpace = (1..3).map({ i => new TeclaSpace(position = game.at(14, 8)) })
@@ -156,6 +150,7 @@ object nivel2 inherits Nivel {
 }
 
 object nivel3 inherits Nivel {
+    override method cancion() = game.sound("musicaNivel3.mp3")
     override method rutaImagen() = "nivel3.jpg"
     override method iniciarMusica() {}
     override method cargarNotas() {}

@@ -1,12 +1,12 @@
-# Nombre del juego (<- borrar y completar)
+# Wollok Heroes
 
-_(Git Grupal: https://docs.google.com/presentation/d/1-o5zEUfuUT72ea8q2rk8mwHSqMkdJvTyQ9Y8eqUTVZA/edit?usp=sharing)_
+(Git Grupal: https://github.com/obj1unq/26s1c4-tp-grupal-26s1c4grupo1)
 
 ## Equipo de desarrollo
-
-- Alguien
-- Persona
-- etc.
+- Arroyo Lautaro
+- Bava Demian
+- Desposito Gabriel
+- Gomez Pilar
 
 ## Capturas
 
@@ -19,6 +19,6 @@ _(Git Grupal: https://docs.google.com/presentation/d/1-o5zEUfuUT72ea8q2rk8mwHSqM
 
 ## Otros
 
-- Curso/Facultad
+- Universidad Nacional de Quilmes
 - Versión de wollok
-- Una vez terminado, no tenemos problemas en que el repositorio sea público / queremos manternerlo privado.
+- Una vez terminado, no tenemos problemas en que el repositorio sea público 
