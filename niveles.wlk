@@ -11,9 +11,16 @@ class Fondo {
 }
 
 class Nivel {
+    var property sectorA = null
+    var property sectorW = null
+    var property sectorS = null
+    var property sectorD = null
+    var property sectorSpace = null
+    
     method iniciar(){
         game.clear()
         self.configurarFondo()
+        self.configurarSectorDeAgarre()
         self.configurarTeclas()
         
         marcador.reiniciar()
@@ -29,16 +36,17 @@ class Nivel {
     }
 
     method configurarTeclas() {
-        keyboard.a().onPressDo({ sectorDeAgarreTeclaA.intentarAgarrar() })
-        keyboard.w().onPressDo({ sectorDeAgarreTeclaW.intentarAgarrar() })
-        keyboard.s().onPressDo({ sectorDeAgarreTeclaS.intentarAgarrar() })
-        keyboard.d().onPressDo({ sectorDeAgarreTeclaD.intentarAgarrar() })
-        keyboard.space().onPressDo({ sectorDeAgarreTeclaSpace.intentarAgarrar() })
+        keyboard.a().onPressDo({ sectorA.intentarAgarrar() })
+        keyboard.w().onPressDo({ sectorW.intentarAgarrar() })
+        keyboard.s().onPressDo({ sectorS.intentarAgarrar() })
+        keyboard.d().onPressDo({ sectorD.intentarAgarrar() })
+        keyboard.space().onPressDo({ sectorSpace.intentarAgarrar() })
+
+        // Esto vuelve al menú principal
         keyboard.r().onPressDo({ juego.cargarElMenu(menuPrincipal) })
     } 
 
     method configurarSectorDeAgarre ()
-
 
     method rutaImagen()
     method cargarNotas() 
@@ -47,7 +55,7 @@ class Nivel {
     method lanzarTeclas(notas){
         var contador = 0
         const letrasMaximo = 10
-        if ( contador < letrasMaximo) {
+        if (contador < letrasMaximo) {
             const notaActual = notas.randomized().first()
             notas.remove(notaActual)
             game.addVisual(notaActual)
@@ -75,26 +83,22 @@ object nivel1 inherits Nivel {
         const notasW     = (1..5).map({ i => new TeclaW(position = game.at(14, 4)) })
         const notasS     = (1..5).map({ i => new TeclaS(position = game.at(14, 3)) })
         const notasD     = (1..5).map({ i => new TeclaD(position = game.at(14, 1)) })
-        
-        
+
         const todasLasNotas = notasA + notasW + notasS + notasD + notasSpace
-        var contador = 0
-        const letrasMaximo = 10
 
         game.onTick(1500, "generador_notas", { self.lanzarTeclas(todasLasNotas) })    
-    
     } 
 
-
     override method configurarSectorDeAgarre(){
-        const sectorDeAgarreTeclaSpace = new SectorDeAgarreTeclaSpace(position = game.at(2,7)) 
-        const sectorDeAgarreTeclaA = new SectorDeAgarreTeclaSpace(position = game.at(2,6)) 
-        const sectorDeAgarreTeclaW = new SectorDeAgarreTeclaSpace(position = game.at(2,4)) 
-        const sectorDeAgarreTeclaS = new SectorDeAgarreTeclaSpace(position = game.at(2,3)) 
-        const sectorDeAgarreTeclaD = new SectorDeAgarreTeclaSpace(position = game.at(2,1)) 
-        const sectoresDeAgarre = #{sectorDeAgarreTeclaSpace, sectorDeAgarreTeclaA, sectorDeAgarreTeclaW, sectorDeAgarreTeclaS, sectorDeAgarreTeclaD}
+        sectorSpace = new SectorDeAgarre(position = game.at(0,7)) 
+        sectorA     = new SectorDeAgarre(position = game.at(0,6)) 
+        sectorW     = new SectorDeAgarre(position = game.at(0,4)) 
+        sectorS     = new SectorDeAgarre(position = game.at(0,3)) 
+        sectorD     = new SectorDeAgarre(position = game.at(0,1))
         
-        sectoresDeAgarre.forEach({ sector => game.addVisual(sector) })
+        const listaSectores = [sectorSpace, sectorA, sectorW, sectorS, sectorD]
+        
+        listaSectores.forEach({ sector => game.addVisual(sector) })
     }
 }
 
@@ -106,47 +110,64 @@ object nivel2 inherits Nivel {
     override method iniciarMusica() {
         cancion.shouldLoop(true)
         cancion.volume(0.5)
-        game.schedule(100, { cancion.play() }) // este tengo duda si no ponerlo en la clase porque se repite codigo
+        game.schedule(100, { cancion.play() })
     }
 
     override method cargarNotas() {
-        const notasSpace = (1..3).map({ i => new TeclaSpace(position = game.at(14, 8)) })
-        const notasA = (1..3).map({ i => new TeclaA(position = game.at(14, 7)) })
-        const notasW = (1..3).map({ i => new TeclaW(position = game.at(14, 5)) })
-        const notasS = (1..3).map({ i => new TeclaS(position = game.at(14, 3)) })
-        const notasD = (1..3).map({ i => new TeclaD(position = game.at(14, 1)) })
+        const notasSpace = (1..5).map({ i => new TeclaSpace(position = game.at(14, 7)) })
+        const notasA     = (1..5).map({ i => new TeclaA(position = game.at(14, 6)) })
+        const notasW     = (1..5).map({ i => new TeclaW(position = game.at(14, 4)) })
+        const notasS     = (1..5).map({ i => new TeclaS(position = game.at(14, 3)) })
+        const notasD     = (1..5).map({ i => new TeclaD(position = game.at(14, 1)) })
         
         const todasLasNotas = notasSpace + notasA + notasW + notasS + notasD
         
-        todasLasNotas.forEach({ nota => 
-            game.addVisual(nota)
-            nota.iniciarMovimiento()
-        })
+        game.onTick(1200, "generador_notas", { self.lanzarTeclas(todasLasNotas) })
     }
 
     override method configurarSectorDeAgarre(){
-        const sectorDeAgarreTeclaSpace = new SectorDeAgarreTeclaSpace(position = game.at(2,7)) 
-        const sectorDeAgarreTeclaA = new SectorDeAgarreTeclaSpace(position = game.at(2,6)) 
-        const sectorDeAgarreTeclaW = new SectorDeAgarreTeclaSpace(position = game.at(2,4)) 
-        const sectorDeAgarreTeclaS = new SectorDeAgarreTeclaSpace(position = game.at(2,3)) 
-        const sectorDeAgarreTeclaD = new SectorDeAgarreTeclaSpace(position = game.at(2,1)) 
+        sectorSpace = new SectorDeAgarre(position = game.at(0,7)) 
+        sectorA     = new SectorDeAgarre(position = game.at(0,6)) 
+        sectorW     = new SectorDeAgarre(position = game.at(0,4)) 
+        sectorS     = new SectorDeAgarre(position = game.at(0,3)) 
+        sectorD     = new SectorDeAgarre(position = game.at(0,1))
         
-        sectorDeAgarreTeclaSpace.position() //game.at(2,8)
-        sectorDeAgarreTeclaA.position() //game.at(2,7)
-        sectorDeAgarreTeclaW.position() //game.at(2,5)
-        sectorDeAgarreTeclaS.position() //game.at(2,3)
-        sectorDeAgarreTeclaD.position() //game.at(2,1)
-        game.addVisual(sectorDeAgarreTeclaA)
-        game.addVisual(sectorDeAgarreTeclaS)
-        game.addVisual(sectorDeAgarreTeclaW)
-        game.addVisual(sectorDeAgarreTeclaD)
-        game.addVisual(sectorDeAgarreTeclaSpace)
+        const listaSectores = [sectorSpace, sectorA, sectorW, sectorS, sectorD]
+        listaSectores.forEach({ sector => game.addVisual(sector) })
     }
 }
 
 object nivel3 inherits Nivel {
     override method rutaImagen() = "nivel3.jpg"
-    override method iniciarMusica() {}
-    override method cargarNotas() {}
-    override method configurarSectorDeAgarre(){}
+
+    const cancion = game.sound("musicaNivel3.mp3") // Dejo preparado el sonido de fondo
+
+    override method iniciarMusica() {
+        cancion.shouldLoop(true)
+        cancion.volume(0.5)
+        game.schedule(100, { cancion.play() })
+    }
+
+    override method configurarSectorDeAgarre(){
+        sectorSpace = new SectorDeAgarre(position = game.at(0,7)) 
+        sectorA     = new SectorDeAgarre(position = game.at(0,6)) 
+        sectorW     = new SectorDeAgarre(position = game.at(0,4)) 
+        sectorS     = new SectorDeAgarre(position = game.at(0,3)) 
+        sectorD     = new SectorDeAgarre(position = game.at(0,1))
+        
+        const listaSectores = [sectorSpace, sectorA, sectorW, sectorS, sectorD]
+        listaSectores.forEach({ sector => game.addVisual(sector) })
+    }
+
+    override method cargarNotas() {
+        const notasSpace = (1..5).map({ i => new TeclaSpace(position = game.at(14, 7)) })
+        const notasA     = (1..5).map({ i => new TeclaA(position = game.at(14, 6)) })
+        const notasW     = (1..5).map({ i => new TeclaW(position = game.at(14, 4)) })
+        const notasS     = (1..5).map({ i => new TeclaS(position = game.at(14, 3)) })
+        const notasD     = (1..5).map({ i => new TeclaD(position = game.at(14, 1)) })
+        
+        const todasLasNotas = notasSpace + notasA + notasW + notasS + notasD
+        
+        game.onTick(1000, "generador_notas", { self.lanzarTeclas(todasLasNotas) })
+    }
 }

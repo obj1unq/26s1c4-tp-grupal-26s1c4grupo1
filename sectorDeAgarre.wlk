@@ -1,45 +1,38 @@
+import letras.*
+import puntos.*
+
+
 class SectorDeAgarre {
     
     var property position 
 
-    method agarrar() {
-        const hayTecla = game.uniqueCollider(self)
-        hayTecla.puntosAObtener()
-        game.removeVisual(hayTecla)
-        
-    }
-
-
     method intentarAgarrar() {
-        try {
-            self.agarrar()
-        } catch e : wollok.lang.Exception {
-            // Vacio
+        const posicionesDeZona = [
+            self.position(),
+            self.position().right(1)
+        ]
+
+        const objetosEnZona = posicionesDeZona.flatMap({ pos => game.getObjectsIn(pos) })
+
+        const notaValida = objetosEnZona.findOrDefault(
+            { visual => 
+                try { 
+                    not visual.fueAtrapada()
+                } catch e : wollok.lang.Exception { 
+                    false 
+                } 
+            }, null
+        )
+
+        if (notaValida != null) {
+            self.agarrar(notaValida)
         }
     }
     
-}
-
-class SectorDeAgarreTeclaW inherits SectorDeAgarre {
+    method agarrar(nota) {
+        nota.puntosAObtener()
+        nota.detener()
+        game.removeVisual(nota)
+    }
     
-
-}
-
-class SectorDeAgarreTeclaA inherits SectorDeAgarre {
-    
-     
-}
-
-class SectorDeAgarreTeclaS inherits SectorDeAgarre {
-    
-     
-}
-
-class SectorDeAgarreTeclaD inherits SectorDeAgarre {
-    
-     
-}
-class SectorDeAgarreTeclaSpace inherits SectorDeAgarre {
-    
-     
 }
