@@ -1,34 +1,53 @@
+import vidas.administradorDeVidas
 import puntos.*
+import wollok.game.*
 
 class NotaMusical {
    var property position
    var property fueAtrapada = false
-   const pasoDeMovimiento = 0.1
 
    method image() 
 
-   method caer() {
-    position = game.at(position.x() - pasoDeMovimiento, position.y())
-    } 
+   method onTickName() = "caida_" + self.identity().toString()
 
-    method iniciarMovimiento() {
-     const velocidadRandom = (20..45).anyOne() 
+   method caer() {
+     position = game.at(position.x() - 1, position.y())
+     if (position.x() < 0) {
+         self.pasarseDeLargo()
+     }
+} 
+
+   method iniciarMovimiento() {
+     const velocidadRandom = (800..900).anyOne() 
      game.onTick(velocidadRandom, "caida_" + self.identity().toString(), { self.caer() })
     } 
 
-    method detener() {
-        game.removeTickEvent("caida_" + self.identity().toString())
-    }
+   method detener() {
+        fueAtrapada = true
+        try {
+            game.removeTickEvent(self.onTickName())
+        } catch e : wollok.lang.Exception { }
+   }
 
-    method puntosAObtener() {
-        marcador.sumar(100) 
-    } 
+   method puntosAObtener() {
+        if (not fueAtrapada) {
+            self.detener()          
+            marcador.sumar(100)    
+            game.removeVisual(self) 
+        } 
+   }
 
-    method puntosARestar() {
-        marcador.restar(50) // Lo implemento otro dia
-    }
-
+   method pasarseDeLargo() {
+        if (not fueAtrapada) {
+            self.detener()
+            game.removeVisual(self) 
+            marcador.restar(50)            
+            administradorDeVidas.perderVida() 
+        }
+   }
 }
+
+
 
 class TeclaA inherits NotaMusical{
   override method image() = "tecla_aFin.png"
