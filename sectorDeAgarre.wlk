@@ -1,20 +1,14 @@
 import letras.*
 import puntos.*
-
+import wollok.game.*
 
 class SectorDeAgarre {
     
     var property position 
 
     method intentarAgarrar() {
-        const posicionesDeZona = [
-            self.position(),
-            self.position().right(1)
-        ]
-
-        const objetosEnZona = posicionesDeZona.flatMap({ pos => game.getObjectsIn(pos) })
-
-        const notaValida = objetosEnZona.findOrDefault(
+        const chocando = game.colliders(self)
+        const notaValida = chocando.findOrDefault(
             { visual => 
                 try { 
                     not visual.fueAtrapada()
@@ -25,14 +19,8 @@ class SectorDeAgarre {
         )
 
         if (notaValida != null) {
-            self.agarrar(notaValida)
+            notaValida.puntosAObtener() 
         }
     }
-    
-    method agarrar(nota) {
-        nota.puntosAObtener()
-        nota.detener()
-        game.removeVisual(nota)
-    }
-    
 }
+

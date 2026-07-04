@@ -8,13 +8,20 @@ class Menu {
   method configurarMenu()
 }
 
-object menuPrincipal inherits Menu{
+object menuPrincipal inherits Menu {  const property musicaMenu = game.sound("guitar-hero.mp3") 
+
   override method image() = "menuPrincipal.jpg"   
   override method position() = game.origin()
 
   override method configurarMenu() {
-    // elegir nivel
-    keyboard.num1().onPressDo({ juego.cargarElMenu(menuNiveles) })
+    musicaMenu.shouldLoop(true)
+    musicaMenu.volume(0.4)
+    game.schedule(100, { musicaMenu.play() })
+    keyboard.num1().onPressDo({ 
+      musicaMenu.stop() 
+      juego.cargarElMenu(menuNiveles) 
+    })
+    
     // keyboard.num2().onPressDo({ self.creadores() })
   }
 }

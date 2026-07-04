@@ -77,11 +77,17 @@ class Nivel {
     }
 
     method iniciarVidas() {
-        game.addVisual(new Corazon(position = game.at(17,8)))
-        game.addVisual(new Corazon(position = game.at(15,8)))
-        game.addVisual(new Corazon(position = game.at(13,8)))
-       
-    } 
+    administradorDeVidas.reiniciarVidas()
+    const corazon1 = new Corazon(position = game.at(17, 8))
+    const corazon2 = new Corazon(position = game.at(15, 8))
+    const corazon3 = new Corazon(position = game.at(13, 8))
+    game.addVisual(corazon1)
+    game.addVisual(corazon2)
+    game.addVisual(corazon3)
+    administradorDeVidas.registrarCorazon(corazon1)
+    administradorDeVidas.registrarCorazon(corazon2)
+    administradorDeVidas.registrarCorazon(corazon3)
+} 
                             
 }
 object nivel1 inherits Nivel {

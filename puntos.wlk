@@ -1,10 +1,11 @@
-object marcador {
 
-    method position() = game.at(self.positionX(), self.positionY()) 
+
+object marcador {
+    var property position = game.at(18, 10) 
 
     var property puntos = 0
-    
-    method positionX() = game.width() - 2
+
+    method positionX() = game.width() - 3 
 
     method positionY() = game.height() - 1
 
@@ -22,6 +23,6 @@ object marcador {
 
     method reiniciar() {
         puntos = 0
+        position = game.at(self.positionX(), self.positionY())
     }
-
 }
