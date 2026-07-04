@@ -33,7 +33,8 @@ class NotaMusical {
         if (not fueAtrapada) {
             self.detener()          
             marcador.sumar(100)    
-            game.removeVisual(self) 
+            game.removeVisual(self)
+            game.sound("sonidoAgarrartecla.mp3").play() 
         } 
    }
 

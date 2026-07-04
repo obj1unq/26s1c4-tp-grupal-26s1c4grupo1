@@ -30,13 +30,14 @@ object administradorDeVidas {
     }
     
     method perderJuego() {
-    game.clear() 
-    const fondoGameOver = new PantallaGameOver()
-    game.addVisual(fondoGameOver)
-    keyboard.r().onPressDo({ 
-        juego.cargarElMenu(menuPrincipal) 
-    })
-}
+     game.sound("perder.mp3").play()
+     game.clear() 
+     const fondoGameOver = new PantallaGameOver()
+     game.addVisual(fondoGameOver)
+     keyboard.r().onPressDo({ 
+      juego.cargarElMenu(menuPrincipal) 
+     })
+    }
 
     method reiniciarVidas() {
         corazones.clear()
