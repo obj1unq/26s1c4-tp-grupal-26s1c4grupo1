@@ -1,4 +1,4 @@
-# Nombre del juego (<- borrar y completar)
+# Nombre del juego
 
 WOLLOK HERO
 
@@ -16,7 +16,7 @@ WOLLOK HERO
 ![alt Nivel 3](image-2.png)
 ![alt Menu Perdida](image-3.png)
 
-## Reglas de Juego / Instrucciones
+## Instrucciones
 
 ¡Intenta tocar la nota correcta cuando llegue al apartado izquierdo de la pantalla!
 ¡Suma la mayor cantidad de puntos posibles!
