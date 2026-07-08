@@ -6,13 +6,9 @@ class Corazon {
     var property image = "corazonFinal1.png"     
 }
 
-class PantallaGameOver {
-    method image() = "fondePerdida.png" 
-    method position() = game.origin() 
-}
-
 object administradorDeVidas {
     const property corazones = []
+    var property nivelActual = null
 
     method registrarCorazon(corazon) {
         corazones.add(corazon)
@@ -28,15 +24,12 @@ object administradorDeVidas {
             }
         }
     }
-    
+
     method perderJuego() {
-     game.sound("perder.mp3").play()
-     game.clear() 
-     const fondoGameOver = new PantallaGameOver()
-     game.addVisual(fondoGameOver)
-     keyboard.r().onPressDo({ 
-      juego.cargarElMenu(menuPrincipal) 
-     })
+        game.sound("perder.mp3").play()
+        game.clear() 
+        const fondoGameOver = new MenuGameOver(nivelActual = self.nivelActual())
+        juego.cargarElMenu(fondoGameOver)
     }
 
     method reiniciarVidas() {
