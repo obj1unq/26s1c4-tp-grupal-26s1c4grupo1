@@ -17,6 +17,7 @@ class Nivel {
     var property sectorS = null
     var property sectorD = null
     var property sectorSpace = null
+    var contadorLetras = 0
     const property notasEnPantalla = []
 
 
@@ -25,6 +26,8 @@ class Nivel {
         self.configurarFondo()
         self.configurarSectorDeAgarre()
         self.configurarTeclas()
+        contadorLetras = 0
+        notasEnPantalla.clear()
         
         marcador.reiniciar()
         game.addVisual(marcador)
@@ -34,12 +37,30 @@ class Nivel {
 
         self.iniciarVidas()
 
-        game.onTick(30, "movimiento_global", { self.actualizarMovimiento() })
+        game.onTick(120, "movimiento_global", { self.actualizarMovimiento() })
     }
 
     method actualizarMovimiento() {
         notasEnPantalla.forEach({ nota => nota.caer() })
+        if (contadorLetras >= 10 and notasEnPantalla.isEmpty()) {
+            self.ganarNivel()
+        }
     }
+
+    method ganarNivel() {
+        
+        game.removeTickEvent("movimiento_global")
+        self.detenerMusica()
+        game.clear()
+        juego.cargarElMenu(menuGanaste)
+    }
+
+    method detenerMusica() {
+            self.cancion().stop()
+
+    }
+
+    method cancion()
 
     method configurarFondo() {
         const fondoDelNivel = new Fondo(image = self.rutaImagen())
@@ -85,16 +106,15 @@ class Nivel {
     method iniciarMusica() 
 
     method lanzarTeclas(notas){
-        var contador = 0
         const letrasMaximo = 10
-        if (contador < letrasMaximo) {
+        if (contadorLetras < letrasMaximo and not notas.isEmpty()) {
             const notaActual = notas.randomized().first()
             notas.remove(notaActual)
             game.addVisual(notaActual)
-            notaActual.iniciarMovimiento()
-            contador += 1
-        } else {
-            game.removeTickEvent("generador_notas")
+            notasEnPantalla.add(notaActual)
+            contadorLetras += 1
+        } else if (contadorLetras >= letrasMaximo) {
+        game.removeTickEvent("generador_notas")
         }
     }
 
@@ -115,35 +135,34 @@ class Nivel {
 object nivel1 inherits Nivel {
     override method rutaImagen() = "nivel1.jpg"
 
-    const cancion = game.sound("musicaNivel1.mp3") // Tenemos que ver que cancion elejimos
+    override method cancion() = game.sound("musicaNivel1.mp3") 
 
     override method iniciarMusica() {
-        cancion.shouldLoop(true)
-        cancion.volume(0.5)
-        game.schedule(100, { cancion.play() })
+        self.cancion().shouldLoop(true)
+        self.cancion().volume(0.5)
+        game.schedule(100, { self.cancion().play() })
     }
 }
 
 object nivel2 inherits Nivel {
     override method rutaImagen() = "nivel2.jpg"
 
-    const cancion = game.sound("musicaNivel2.mp3")
+    override method cancion() = game.sound("musicaNivel2.mp3")
 
     override method iniciarMusica() {
-        cancion.shouldLoop(true)
-        cancion.volume(0.5)
-        game.schedule(100, { cancion.play() })
+        self.cancion().shouldLoop(true)
+        self.cancion().volume(0.5)
+        game.schedule(100, { self.cancion().play() })
     }
 }
 
 object nivel3 inherits Nivel {
     override method rutaImagen() = "nivel3.jpg"
-
-    const cancion = game.sound("musicaNivel3.mp3") // Dejo preparado el sonido de fondo
+    override method cancion() = game.sound("musicaNivel3.mp3") 
 
     override method iniciarMusica() {
-        cancion.shouldLoop(true)
-        cancion.volume(0.5)
-        game.schedule(100, { cancion.play() })
+        self.cancion().shouldLoop(true)
+        self.cancion().volume(0.5)
+        game.schedule(100, { self.cancion().play() })
     }
 }
