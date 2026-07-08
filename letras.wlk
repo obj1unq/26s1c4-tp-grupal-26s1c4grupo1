@@ -18,7 +18,7 @@ class NotaMusical {
 } 
 
    method iniciarMovimiento() {
-     const velocidadRandom = (5..9).anyOne() 
+     const velocidadRandom = (500..900).anyOne() 
      game.onTick(velocidadRandom, "caida_" + self.identity().toString(), { self.caer() })
     } 
 
