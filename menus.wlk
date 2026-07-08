@@ -8,7 +8,8 @@ class Menu {
   method configurarMenu()
 }
 
-object menuPrincipal inherits Menu {  const property musicaMenu = game.sound("guitar-hero.mp3") 
+object menuPrincipal inherits Menu {  
+  const property musicaMenu = game.sound("guitar-hero.mp3") 
 
   override method image() = "menuPrincipal.jpg"   
   override method position() = game.origin()
@@ -22,8 +23,16 @@ object menuPrincipal inherits Menu {  const property musicaMenu = game.sound("gu
       juego.cargarElMenu(menuNiveles) 
     })
     
-    // keyboard.num2().onPressDo({ self.creadores() })
+     keyboard.num2().onPressDo({ juego.cargarElMenu(creadores) })
   }
+
+ 
+}
+
+object creadores inherits Menu{
+  override method image() = "creadores.png"   
+  override method position() = game.origin()
+  override method configurarMenu() =  keyboard.r().onPressDo({ juego.cargarElMenu(menuPrincipal) })
 }
 
 object menuNiveles inherits Menu{
