@@ -5,21 +5,26 @@ import wollok.game.*
 class NotaMusical {
    var property position
    var property fueAtrapada = false
+   var property velocidad = 1
 
    method image() 
 
    method onTickName() = "caida_" + self.identity().toString()
 
-   method caer() {
-     position = game.at(position.x() - 1, position.y())
+    method caer() {
+     position = game.at(position.x() - velocidad, position.y())
      if (position.x() < 0) {
          self.pasarseDeLargo()
      }
-} 
+    } 
+
+    method acelerar(nuevaVelocidad) {
+        velocidad = nuevaVelocidad
+   }
 
    method iniciarMovimiento() {
-     const velocidadRandom = (500..900).anyOne() 
-     game.onTick(velocidadRandom, "caida_" + self.identity().toString(), { self.caer() })
+        const velocidadRandom = (500..900).anyOne() 
+        game.onTick(velocidadRandom, "caida_" + self.identity().toString(), { self.caer() })
     } 
 
    method detener() {

@@ -23,16 +23,18 @@ object menuPrincipal inherits Menu {
       juego.cargarElMenu(menuNiveles) 
     })
     
-     keyboard.num2().onPressDo({ juego.cargarElMenu(creadores) })
+     keyboard.num2().onPressDo({ 
+      musicaMenu.stop()   //si borro esta linea para que siga sonando la musica tira erorr
+      juego.cargarElMenu(creadores) })
   }
 
  
 }
 
 object creadores inherits Menu{
-  override method image() = "creadores.png"   
+  override method image() = "creadoresFin.jpg"   
   override method position() = game.origin()
-  override method configurarMenu() =  keyboard.r().onPressDo({ juego.cargarElMenu(menuPrincipal) })
+  override method configurarMenu() { keyboard.r().onPressDo({ juego.cargarElMenu(menuPrincipal) })}
 }
 
 object menuNiveles inherits Menu{

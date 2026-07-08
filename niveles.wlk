@@ -19,6 +19,8 @@ class Nivel {
     var property sectorSpace = null
     const property notasEnPantalla = []
 
+    method velocidadDeCaida()
+
 
     method iniciar(){
         game.clear()
@@ -36,7 +38,8 @@ class Nivel {
 
         administradorDeVidas.nivelActual(self)
 
-        game.onTick(30, "movimiento_global", { self.actualizarMovimiento() })
+        game.onTick(self.velocidadDeCaida(), "movimiento_global", { self.actualizarMovimiento() })
+    
     }
 
     method actualizarMovimiento() {
@@ -72,7 +75,8 @@ class Nivel {
     }
 
     method rutaImagen()
-    method cargarNotas() {
+    method cargarNotas(){
+      
         const notasSpace = (1..5).map({ i => new TeclaSpace(position = game.at(19, 7)) })
         const notasA     = (1..5).map({ i => new TeclaA(position = game.at(19, 6)) })
         const notasW     = (1..5).map({ i => new TeclaW(position = game.at(19, 4)) })
@@ -82,10 +86,23 @@ class Nivel {
         const todasLasNotas = notasSpace + notasA + notasW + notasS + notasD
         
         game.onTick(1000, "generador_notas", { self.lanzarTeclas(todasLasNotas) })
-    }
+    } 
+    
      
-    method iniciarMusica() 
+    method iniciarMusica() {
+        const cancion = game.sound(self.nombreCancion()) 
 
+        cancion.shouldLoop(true)
+        cancion.volume(0.5)
+        game.schedule(100, { cancion.play() })
+    }
+
+    method nombreCancion()
+      
+    
+   
+       
+    
     method lanzarTeclas(notas){
         var contador = 0
         const letrasMaximo = 10
@@ -115,37 +132,31 @@ class Nivel {
                             
 }
 object nivel1 inherits Nivel {
+
+    override method velocidadDeCaida() = 60
+
     override method rutaImagen() = "nivel1.jpg"
+    override method nombreCancion() = "musicaNivel1.mp3"
 
-    const cancion = game.sound("musicaNivel1.mp3") // Tenemos que ver que cancion elejimos
-
-    override method iniciarMusica() {
-        cancion.shouldLoop(true)
-        cancion.volume(0.5)
-        game.schedule(100, { cancion.play() })
-    }
+   
 }
 
 object nivel2 inherits Nivel {
+
+    override method velocidadDeCaida() = 80
+
     override method rutaImagen() = "nivel2.jpg"
+    override method nombreCancion() = "musicaNivel2.mp3"
 
-    const cancion = game.sound("musicaNivel2.mp3")
-
-    override method iniciarMusica() {
-        cancion.shouldLoop(true)
-        cancion.volume(0.5)
-        game.schedule(100, { cancion.play() })
-    }
+  
 }
 
 object nivel3 inherits Nivel {
+
+    override method velocidadDeCaida() = 90
+
     override method rutaImagen() = "nivel3.jpg"
+    override method nombreCancion() = "musicaNivel3.mp3"
 
-    const cancion = game.sound("musicaNivel3.mp3") // Dejo preparado el sonido de fondo
-
-    override method iniciarMusica() {
-        cancion.shouldLoop(true)
-        cancion.volume(0.5)
-        game.schedule(100, { cancion.play() })
-    }
+  
 }
