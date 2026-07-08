@@ -18,11 +18,11 @@ class Nivel {
     var property sectorD = null
     var property sectorSpace = null
     var contadorLetras = 0
-    const letrasMaximo = 10
     const property notasEnPantalla = []
 
     method iniciar(){
         game.clear()
+        contadorLetras = 0
         self.configurarFondo()
         self.configurarSectorDeAgarre()
         self.configurarTeclas()
@@ -42,14 +42,20 @@ class Nivel {
 
     method actualizarMovimiento() {
         notasEnPantalla.forEach({ nota => nota.caer() })
-        if (contadorLetras >= letrasMaximo and notasEnPantalla.isEmpty()) {
+        if (contadorLetras >= self.letrasMaximo() and notasEnPantalla.isEmpty()) {
             self.ganarNivel()
         }
     }
 
+    method letrasMaximo()
+
     method ganarNivel() {
-        self.cancion().pause()
+        self.pausarMusica()
         juego.cargarElMenu(menuGanaste)
+    }
+
+    method pausarMusica() {
+        self.cancion().stop()
     }
 
     method cancion()
@@ -84,11 +90,11 @@ class Nivel {
 
     method rutaImagen()
     method cargarNotas() {
-        const notasSpace = (1..5).map({ i => new TeclaSpace(position = game.at(19, 7)) })
-        const notasA     = (1..5).map({ i => new TeclaA(position = game.at(19, 6)) })
-        const notasW     = (1..5).map({ i => new TeclaW(position = game.at(19, 4)) })
-        const notasS     = (1..5).map({ i => new TeclaS(position = game.at(19, 3)) })
-        const notasD     = (1..5).map({ i => new TeclaD(position = game.at(19, 1)) })
+        const notasSpace = (1..10).map({ i => new TeclaSpace(position = game.at(19, 7)) })
+        const notasA     = (1..10).map({ i => new TeclaA(position = game.at(19, 6)) })
+        const notasW     = (1..10).map({ i => new TeclaW(position = game.at(19, 4)) })
+        const notasS     = (1..10).map({ i => new TeclaS(position = game.at(19, 3)) })
+        const notasD     = (1..10).map({ i => new TeclaD(position = game.at(19, 1)) })
         
         const todasLasNotas = notasSpace + notasA + notasW + notasS + notasD
         
@@ -102,13 +108,13 @@ class Nivel {
     }
 
     method lanzarTeclas(notas){
-        if (contadorLetras < letrasMaximo and not notas.isEmpty()) {
+        if (contadorLetras < self.letrasMaximo() and not notas.isEmpty()) {
             const notaActual = notas.randomized().first()
             notas.remove(notaActual)
             game.addVisual(notaActual)
             notasEnPantalla.add(notaActual)
             contadorLetras += 1
-        } else if (contadorLetras >= letrasMaximo) {
+        } else if (contadorLetras >= self.letrasMaximo()) {
         game.removeTickEvent("generador_notas")
         }
     }
@@ -124,6 +130,8 @@ class Nivel {
 }
 
 object nivel1 inherits Nivel {
+    override method letrasMaximo() = 215
+
     override method rutaImagen() = "nivel1.jpg"
     
     const cancion = game.sound("nivel1.mp3") 
@@ -132,6 +140,8 @@ object nivel1 inherits Nivel {
 }
 
 object nivel2 inherits Nivel {
+    override method letrasMaximo() = 200
+
     override method rutaImagen() = "nivel2.jpg"
 
     const cancion = game.sound("nivel2.mp3")
@@ -140,6 +150,8 @@ object nivel2 inherits Nivel {
 }
 
 object nivel3 inherits Nivel {
+    override method letrasMaximo() = 200
+
     override method rutaImagen() = "nivel3.jpg"
 
     const cancion = game.sound("nivel3.mp3")

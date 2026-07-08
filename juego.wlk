@@ -32,4 +32,9 @@ object juego {
     administradorDeVidas.nivelActual(nivel)
   }
 
+  method pausarMusicaNivel(nivel) {
+    const nivelElegido = niveles.get(nivel - 1)
+    nivelElegido.pausarMusica()
+  }
+
 }
