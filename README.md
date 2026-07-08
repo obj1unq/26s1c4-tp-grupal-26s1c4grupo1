@@ -1,6 +1,6 @@
 # Nombre del juego
 
-WOLLOK HERO
+WOLLOK HEROES
 
 ## Equipo de desarrollo
 
