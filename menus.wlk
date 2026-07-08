@@ -16,13 +16,9 @@ object menuPrincipal inherits Menu {
   override method configurarMenu() {
     musicaMenu.shouldLoop(true)
     musicaMenu.volume(0.4)
-    game.schedule(100, { musicaMenu.play() })
-    keyboard.num1().onPressDo({ 
-      musicaMenu.stop() 
-      juego.cargarElMenu(menuNiveles) 
-    })
-    
-    // keyboard.num2().onPressDo({ self.creadores() })
+    game.schedule(1, { musicaMenu.play() })
+    keyboard.num1().onPressDo({ musicaMenu.stop() juego.cargarElMenu(menuNiveles) })
+    keyboard.num2().onPressDo({ musicaMenu.stop() juego.cargarElMenu(menuCreadores) })
   }
 }
 
@@ -37,7 +33,7 @@ object menuNiveles inherits Menu{
 }
 
 class MenuGameOver inherits Menu {
-  override method image() = "menuPerdida.jpg" 
+  override method image() = "fondoGameOver.png" 
   const property nivelActual
 
   override method configurarMenu() {
@@ -47,10 +43,16 @@ class MenuGameOver inherits Menu {
 }
 
 object menuGanaste inherits Menu {
-  override method image() = "menuGanaste.jpg" 
+  override method image() = "ganasteFinal.png" 
   override method configurarMenu() {
-    keyboard.m().onPressDo({ 
-      juego.cargarElMenu(menuPrincipal) 
-    })
+    keyboard.m().onPressDo({ juego.cargarElMenu(menuPrincipal) })
+  }
+}
+
+object menuCreadores inherits Menu{
+  override method image() = "creadoresFinal.png"
+  override method position() = game.origin()
+  override method configurarMenu() {
+    keyboard.r().onPressDo({ juego.cargarElMenu(menuPrincipal) })
   }
 }

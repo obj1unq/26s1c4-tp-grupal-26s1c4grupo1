@@ -18,15 +18,15 @@ class Nivel {
     var property sectorD = null
     var property sectorSpace = null
     var contadorLetras = 0
+    const letrasMaximo = 10
     const property notasEnPantalla = []
-
 
     method iniciar(){
         game.clear()
         self.configurarFondo()
         self.configurarSectorDeAgarre()
         self.configurarTeclas()
-        contadorLetras = 0
+
         notasEnPantalla.clear()
         
         marcador.reiniciar()
@@ -42,22 +42,14 @@ class Nivel {
 
     method actualizarMovimiento() {
         notasEnPantalla.forEach({ nota => nota.caer() })
-        if (contadorLetras >= 10 and notasEnPantalla.isEmpty()) {
+        if (contadorLetras >= letrasMaximo and notasEnPantalla.isEmpty()) {
             self.ganarNivel()
         }
     }
 
     method ganarNivel() {
-        
-        game.removeTickEvent("movimiento_global")
-        self.detenerMusica()
-        game.clear()
+        self.cancion().pause()
         juego.cargarElMenu(menuGanaste)
-    }
-
-    method detenerMusica() {
-            self.cancion().stop()
-
     }
 
     method cancion()
@@ -103,10 +95,13 @@ class Nivel {
         game.onTick(1000, "generador_notas", { self.lanzarTeclas(todasLasNotas) })
     }
      
-    method iniciarMusica() 
+    method iniciarMusica() {
+        self.cancion().shouldLoop(true)
+        self.cancion().volume(0.5)
+        game.schedule(0, { self.cancion().play() })
+    }
 
     method lanzarTeclas(notas){
-        const letrasMaximo = 10
         if (contadorLetras < letrasMaximo and not notas.isEmpty()) {
             const notaActual = notas.randomized().first()
             notas.remove(notaActual)
@@ -123,46 +118,31 @@ class Nivel {
     const corazon1 = new Corazon(position = game.at(17, 8))
     const corazon2 = new Corazon(position = game.at(15, 8))
     const corazon3 = new Corazon(position = game.at(13, 8))
-    game.addVisual(corazon1)
-    game.addVisual(corazon2)
-    game.addVisual(corazon3)
-    administradorDeVidas.registrarCorazon(corazon1)
-    administradorDeVidas.registrarCorazon(corazon2)
-    administradorDeVidas.registrarCorazon(corazon3)
-} 
-                            
+    const corazones = [corazon1, corazon2, corazon3]
+    corazones.forEach({ corazon => game.addVisual(corazon) administradorDeVidas.registrarCorazon(corazon) })
+    } 
 }
+
 object nivel1 inherits Nivel {
     override method rutaImagen() = "nivel1.jpg"
+    
+    const cancion = game.sound("nivel1.mp3") 
 
-    override method cancion() = game.sound("musicaNivel1.mp3") 
-
-    override method iniciarMusica() {
-        self.cancion().shouldLoop(true)
-        self.cancion().volume(0.5)
-        game.schedule(100, { self.cancion().play() })
-    }
+    override method cancion() = cancion
 }
 
 object nivel2 inherits Nivel {
     override method rutaImagen() = "nivel2.jpg"
 
-    override method cancion() = game.sound("musicaNivel2.mp3")
+    const cancion = game.sound("nivel2.mp3")
 
-    override method iniciarMusica() {
-        self.cancion().shouldLoop(true)
-        self.cancion().volume(0.5)
-        game.schedule(100, { self.cancion().play() })
-    }
+    override method cancion() = cancion
 }
 
 object nivel3 inherits Nivel {
     override method rutaImagen() = "nivel3.jpg"
-    override method cancion() = game.sound("musicaNivel3.mp3") 
 
-    override method iniciarMusica() {
-        self.cancion().shouldLoop(true)
-        self.cancion().volume(0.5)
-        game.schedule(100, { self.cancion().play() })
-    }
+    const cancion = game.sound("nivel3.mp3")
+
+    override method cancion() = cancion
 }

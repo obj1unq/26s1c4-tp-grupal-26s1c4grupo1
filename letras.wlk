@@ -17,7 +17,6 @@ class NotaMusical {
     }
    }
 
-
    method detener() {
         fueAtrapada = true
    }

@@ -26,8 +26,8 @@ object administradorDeVidas {
     }
 
     method perderJuego() {
-        game.sound("perder.mp3").play()
         game.clear() 
+        game.sound("perder.mp3").play()
         const fondoGameOver = new MenuGameOver(nivelActual = self.nivelActual())
         juego.cargarElMenu(fondoGameOver)
     }
