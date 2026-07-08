@@ -1,0 +1,74 @@
+import letras.*
+import puntos.*
+import vidas.*
+import sectorDeAgarre.*
+import wollok.game.*
+
+describe "Guitar Hero - Pruebas de Lógica" {
+
+    method initialize() {
+        game.clear()
+        marcador.reiniciar()
+        administradorDeVidas.nivelActual(1)
+    }
+
+    test "El marcador inicia con 0 puntos" {
+        assert.equals(0, marcador.puntos())
+    }
+
+    test "Al sumar puntos el marcador incrementa " {
+        marcador.sumar(100)
+        marcador.sumar(100)
+        assert.equals(200, marcador.puntos())
+    }
+
+    test "Puntos del marcador negativos si se pasa de largo" {
+        const a = new TeclaA(position = game.at(0, 6))
+        const w = new TeclaW(position = game.at(0, 4))
+        const s = new TeclaS(position = game.at(0, 3))
+        marcador.sumar(100)
+        a.pasarseDeLargo()
+        s.pasarseDeLargo()
+        w.pasarseDeLargo()
+        assert.that(marcador.puntos() < 0) 
+    }
+
+    test "Una nota se desplaza 1 posición a la izquierda al caer" {
+        const nota = new TeclaA(position = game.at(10, 5))
+        nota.caer()
+        assert.equals(game.at(9, 5), nota.position())
+    }
+
+    test "Atrapar una nota suma 100 puntos y la marca como atrapada" {
+        const w = new TeclaW(position = game.at(2, 5))
+        w.puntosAObtener()
+        assert.equals(100, marcador.puntos())
+        assert.that(w.fueAtrapada())
+    }
+
+    test "Una nota no suma puntos dos veces" {
+        const s = new TeclaS(position = game.at(2, 5))
+        s.puntosAObtener() // Primera captura
+        s.puntosAObtener() // Intento de segunda captura
+        assert.equals(100, marcador.puntos()) // No debería sumar 200
+    }
+
+    test "Pasarse de largo resta 50 puntos" {
+        const d = new TeclaD(position = game.at(0, 1))
+        d.pasarseDeLargo()
+        assert.equals(-50, marcador.puntos())
+    }
+
+    test "Al perder una nota, la cantidad de corazones disminuye en 1" {
+        administradorDeVidas.reiniciarVidas()
+        administradorDeVidas.registrarCorazon(new Corazon(position = game.at(1,1)))
+        administradorDeVidas.registrarCorazon(new Corazon(position = game.at(2,1)))
+        administradorDeVidas.registrarCorazon(new Corazon(position = game.at(3,1)))
+        const nota = new TeclaA(position = game.at(0, 5))
+        const vidasIniciales = administradorDeVidas.corazones().size()
+        
+        nota.pasarseDeLargo()
+        assert.equals(vidasIniciales - 1, administradorDeVidas.corazones().size())
+    }
+
+}
