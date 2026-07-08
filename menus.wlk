@@ -41,7 +41,7 @@ class MenuGameOver inherits Menu {
   const property nivelActual
 
   override method configurarMenu() {
-    keyboard.r().onPressDo({ juego.cargarNivel(nivelActual) })
+    keyboard.f().onPressDo({ juego.cargarNivel(nivelActual) })
     keyboard.m().onPressDo({ juego.cargarElMenu(menuPrincipal) })
   }
 }

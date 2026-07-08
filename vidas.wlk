@@ -8,7 +8,7 @@ class Corazon {
 
 object administradorDeVidas {
     const property corazones = []
-    var property nivelActual = null
+    var property nivelActual = 0
 
     method registrarCorazon(corazon) {
         corazones.add(corazon)

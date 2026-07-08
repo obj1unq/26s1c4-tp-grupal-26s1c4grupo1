@@ -1,5 +1,5 @@
 import letras.*
-
+import vidas.*
 import sectorDeAgarre.*
 import niveles.*
 import menus.*
@@ -19,7 +19,6 @@ object juego {
 
   }
   
-
   method cargarElMenu(menu) {
     game.clear()
     game.addVisual(menu) 
@@ -30,6 +29,7 @@ object juego {
   method cargarNivel(nivel){
     const nivelElegido = niveles.get(nivel - 1)
     nivelElegido.iniciar()
+    administradorDeVidas.nivelActual(nivel)
   }
 
 }

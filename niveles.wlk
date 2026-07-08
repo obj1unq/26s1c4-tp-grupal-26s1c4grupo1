@@ -34,8 +34,6 @@ class Nivel {
 
         self.iniciarVidas()
 
-        administradorDeVidas.nivelActual(self)
-
         game.onTick(30, "movimiento_global", { self.actualizarMovimiento() })
     }
 
