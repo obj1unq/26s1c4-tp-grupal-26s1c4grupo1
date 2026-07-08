@@ -1,6 +1,7 @@
 import vidas.administradorDeVidas
 import puntos.*
 import wollok.game.*
+import niveles.*
 
 class NotaMusical {
    var property position
@@ -8,33 +9,26 @@ class NotaMusical {
 
    method image() 
 
-   method onTickName() = "caida_" + self.identity().toString()
-
    method caer() {
-     position = game.at(position.x() - 1, position.y())
-     if (position.x() < 0) {
-         self.pasarseDeLargo()
-     }
-} 
+    if (fueAtrapada) {}
+    position = game.at(position.x() - 1, position.y()) 
+    if (position.x() < 0) { 
+        self.pasarseDeLargo() 
+    }
+   }
 
-   method iniciarMovimiento() {
-     const velocidadRandom = (500..900).anyOne() 
-     game.onTick(velocidadRandom, "caida_" + self.identity().toString(), { self.caer() })
-    } 
 
    method detener() {
         fueAtrapada = true
-        try {
-            game.removeTickEvent(self.onTickName())
-        } catch e : wollok.lang.Exception { }
    }
 
    method puntosAObtener() {
         if (not fueAtrapada) {
-            self.detener()          
-            marcador.sumar(100)    
+            self.detener() 
+            marcador.sumar(100)   
             game.removeVisual(self)
-            game.sound("sonidoAgarrartecla.mp3").play() 
+            self.removerDeNotasEnPantalla()
+            game.sound("sonidoAgarrartecla.mp3").play()
         } 
    }
 
@@ -44,7 +38,14 @@ class NotaMusical {
             game.removeVisual(self) 
             marcador.restar(50)            
             administradorDeVidas.perderVida() 
+            self.removerDeNotasEnPantalla()
         }
+   }
+
+   method removerDeNotasEnPantalla() {
+        if (administradorDeVidas.nivelActual() == 1) nivel1.notasEnPantalla().remove(self)
+        if (administradorDeVidas.nivelActual() == 2) nivel2.notasEnPantalla().remove(self)
+        if (administradorDeVidas.nivelActual() == 3) nivel3.notasEnPantalla().remove(self)
    }
 }
 

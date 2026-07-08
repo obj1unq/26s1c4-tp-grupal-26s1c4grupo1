@@ -4,5 +4,5 @@ import letras.*
 
 program guitarHero {
        juego.iniciar()
-}
+} 
 

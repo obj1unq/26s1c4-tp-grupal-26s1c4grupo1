@@ -45,3 +45,12 @@ class MenuGameOver inherits Menu {
     keyboard.m().onPressDo({ juego.cargarElMenu(menuPrincipal) })
   }
 }
+
+object menuGanaste inherits Menu {
+  override method image() = "menuGanaste.jpg" 
+  override method configurarMenu() {
+    keyboard.m().onPressDo({ 
+      juego.cargarElMenu(menuPrincipal) 
+    })
+  }
+}
