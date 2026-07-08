@@ -20,9 +20,9 @@ class NotaMusical {
 
     method acelerar(nuevaVelocidad) {
         velocidad = nuevaVelocidad
-   }
-
-   method iniciarMovimiento() {
+    }
+   
+    method iniciarMovimiento() {
         const velocidadRandom = (500..900).anyOne() 
         game.onTick(velocidadRandom, "caida_" + self.identity().toString(), { self.caer() })
     } 
