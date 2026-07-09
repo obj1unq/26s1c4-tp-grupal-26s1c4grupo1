@@ -1,6 +1,7 @@
 # Nombre del juego
 
-WOLLOK HEROES
+<span style="font-size:20px; text-decoration: underline; color: orange;">WOLLOK HEROES</span>
+
 
 ## Equipo de desarrollo
 
@@ -11,10 +12,25 @@ WOLLOK HEROES
 
 ## Capturas
 
-![alt Menu Principal](image.png)
-![alt Menu Niveles](image-1.png)
-![alt Nivel 3](image-2.png)
-![alt Menu Perdida](image-3.png)
+<figure>
+    <img src="image.png">
+    <figurecaption><i>Captura del Menu Principal del juego</i><figurecaption>
+</figure>
+
+<figure>
+    <img src="image-1.png">
+    <figurecaption><i>Selector de niveles</i><figurecaption>
+</figure>
+
+<figure>
+    <img src="image-2.png">
+    <figurecaption><i>Nivel 3 en acción</i><figurecaption>
+</figure>
+
+<figure>
+    <img src="image-3.png">
+    <figurecaption><i>Pantalla Game Over</i><figurecaption>
+</figure>
 
 ## Instrucciones
 

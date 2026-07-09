@@ -100,7 +100,7 @@ class Nivel {
         
         game.onTick(1000, "generador_notas", { self.lanzarTeclas(todasLasNotas) })
     }
-     
+    
     method iniciarMusica() {
         self.cancion().shouldLoop(true)
         self.cancion().volume(0.5)
