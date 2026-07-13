@@ -23,23 +23,24 @@ class NotaMusical {
 
    method puntosAObtener() {
         if (not fueAtrapada) {
-            self.detener() 
+            self.eliminarNota()
             marcador.sumar(100)   
-            game.removeVisual(self)
-            self.removerDeNotasEnPantalla()
-            game.sound("sonidoAgarrartecla.mp3").play()
+            game.sound("agarrarTecla.mp3").play()
         } 
    }
 
    method pasarseDeLargo() {
         if (not fueAtrapada) {
-            self.detener()
-            game.removeVisual(self) 
             marcador.restar(50)            
             administradorDeVidas.perderVida() 
-            self.removerDeNotasEnPantalla()
         }
    }
+
+    method eliminarNota() {
+        self.detener()
+        game.removeVisual(self)
+        self.removerDeNotasEnPantalla()
+    }
 
    method removerDeNotasEnPantalla() {
         if (administradorDeVidas.nivelActual() == 1) nivel1.notasEnPantalla().remove(self)
