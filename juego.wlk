@@ -23,7 +23,6 @@ object juego {
     game.clear()
     game.addVisual(menu) 
     menu.configurarMenu() 
-    keyboard.r().onPressDo({ self.cargarElMenu(menuPrincipal) })
   }
 
   method cargarNivel(nivel){
