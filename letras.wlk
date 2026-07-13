@@ -31,6 +31,7 @@ class NotaMusical {
 
    method pasarseDeLargo() {
         if (not fueAtrapada) {
+            self.eliminarNota()
             marcador.restar(50)            
             administradorDeVidas.perderVida() 
         }

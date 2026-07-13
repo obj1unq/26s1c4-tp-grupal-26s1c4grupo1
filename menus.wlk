@@ -6,7 +6,7 @@ class Menu {
   method image()
   method position() = game.origin()
   method configurarMenu() {
-    keyboard.r().onPressDo({ juego.cargarElMenu(menuPrincipal) }) 
+    keyboard.r().onPressDo({ juego.cargarElMenu(menuPrincipal) game.sound("menuClick.mp3").play() }) 
   }
 }
 
@@ -29,9 +29,9 @@ object menuNiveles inherits Menu{
 
   override method configurarMenu() {
     super()
-    keyboard.num1().onPressDo({ juego.cargarNivel(1) })
-    keyboard.num2().onPressDo({ juego.cargarNivel(2) })
-    keyboard.num3().onPressDo({ juego.cargarNivel(3) })
+    keyboard.num1().onPressDo({ juego.cargarNivel(1) game.sound("menuClick.mp3").play() })
+    keyboard.num2().onPressDo({ juego.cargarNivel(2) game.sound("menuClick.mp3").play() })
+    keyboard.num3().onPressDo({ juego.cargarNivel(3) game.sound("menuClick.mp3").play() })
   }
 }
 
@@ -40,15 +40,15 @@ class MenuGameOver inherits Menu {
   const property nivelActual
 
   override method configurarMenu() {
-    keyboard.f().onPressDo({ juego.cargarNivel(nivelActual) })
-    keyboard.m().onPressDo({ juego.cargarElMenu(menuPrincipal) })
+    keyboard.f().onPressDo({ juego.cargarNivel(nivelActual) game.sound("menuClick.mp3").play() })
+    keyboard.m().onPressDo({ juego.cargarElMenu(menuPrincipal) game.sound("menuClick.mp3").play() })
   }
 }
 
 object menuGanaste inherits Menu {
   override method image() = "ganasteFinal.png" 
   override method configurarMenu() {
-    keyboard.m().onPressDo({ juego.cargarElMenu(menuPrincipal) })
+    keyboard.m().onPressDo({ juego.cargarElMenu(menuPrincipal) game.sound("menuClick.mp3").play() })
   }
 }
 

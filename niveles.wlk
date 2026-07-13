@@ -18,6 +18,7 @@ class Nivel {
     var property sectorD = null
     var property sectorSpace = null
     var contadorLetras = 0
+    var property nivelActual = 0
     const property notasEnPantalla = []
 
     method iniciar(){
@@ -73,7 +74,7 @@ class Nivel {
         keyboard.space().onPressDo({ sectorSpace.intentarAgarrar() })
 
         // Esto vuelve al menú principal
-        keyboard.r().onPressDo({ juego.cargarElMenu(menuPrincipal) })
+        keyboard.r().onPressDo({ juego.cargarElMenu(menuPrincipal) juego.pausarMusicaNivel(nivelActual) })
     } 
 
     method configurarSectorDeAgarre(){

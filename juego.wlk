@@ -28,6 +28,7 @@ object juego {
   method cargarNivel(nivel){
     const nivelElegido = niveles.get(nivel - 1)
     nivelElegido.iniciar()
+    nivelElegido.nivelActual(nivel)
     administradorDeVidas.nivelActual(nivel)
   }
 
