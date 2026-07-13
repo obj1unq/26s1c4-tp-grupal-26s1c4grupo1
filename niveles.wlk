@@ -51,7 +51,9 @@ class Nivel {
     method letrasMaximo()
 
     method ganarNivel() {
-        self.pausarMusica()
+        game.clear()
+        juego.pausarMusicaNivel(nivelActual)
+        const menuGanaste = new MenuGanaste(nivelActual = self.nivelActual())
         juego.cargarElMenu(menuGanaste)
     }
 
@@ -131,7 +133,7 @@ class Nivel {
 }
 
 object nivel1 inherits Nivel {
-    override method letrasMaximo() = 215
+    override method letrasMaximo() = 5
 
     override method rutaImagen() = "nivel1.jpg"
     

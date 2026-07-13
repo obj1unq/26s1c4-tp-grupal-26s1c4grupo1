@@ -19,6 +19,7 @@ object administradorDeVidas {
             const corazonAPerder = corazones.last()
             corazonAPerder.image("corazon_gris_Final.png") 
             corazones.remove(corazonAPerder) 
+            game.sound("perderVida.mp3").play()
             if (corazones.isEmpty()) {
                 self.perderJuego()
             }
@@ -29,8 +30,8 @@ object administradorDeVidas {
         game.clear() 
         juego.pausarMusicaNivel(nivelActual)
         game.sound("perderAudio.mp3").play()
-        const fondoGameOver = new MenuGameOver(nivelActual = self.nivelActual())
-        juego.cargarElMenu(fondoGameOver)
+        const menuGameOver = new MenuGameOver(nivelActual = self.nivelActual())
+        juego.cargarElMenu(menuGameOver)
     }
 
     method reiniciarVidas() {
