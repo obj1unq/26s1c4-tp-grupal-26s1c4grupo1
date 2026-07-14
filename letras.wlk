@@ -2,12 +2,15 @@ import vidas.administradorDeVidas
 import puntos.*
 import wollok.game.*
 import niveles.*
+import juego.*
 
 class NotaMusical {
    var property position
    var property fueAtrapada = false
 
    method image() 
+
+   method esAtrapable() = true
 
    method caer() {
     if (fueAtrapada) {}
@@ -44,9 +47,7 @@ class NotaMusical {
     }
 
    method removerDeNotasEnPantalla() {
-        if (administradorDeVidas.nivelActual() == 1) nivel1.notasEnPantalla().remove(self)
-        if (administradorDeVidas.nivelActual() == 2) nivel2.notasEnPantalla().remove(self)
-        if (administradorDeVidas.nivelActual() == 3) nivel3.notasEnPantalla().remove(self)
+        juego.nivelActual().notasEnPantalla().remove(self)
    }
 }
 
@@ -69,4 +70,43 @@ class TeclaD inherits NotaMusical {
 }
 class TeclaSpace inherits NotaMusical {
     override method image() = "tecla_dSpace.png"
+}
+
+class TeclaCurativa inherits NotaMusical{
+    override method image() = "heal.png" 
+
+    override method puntosAObtener() {
+        if (not fueAtrapada) {
+            self.eliminarNota()
+            marcador.sumar(150) 
+            administradorDeVidas.ganarVida() 
+        }
+    }
+
+    override method pasarseDeLargo() {
+        if (not fueAtrapada) {
+            self.eliminarNota()
+        }
+    }
+}
+
+class TeclaBomba inherits NotaMusical {
+    override method image() = "teclaBomba.png" 
+
+    override method puntosAObtener() {
+        if (not fueAtrapada) {
+            self.eliminarNota()
+            marcador.restar(150)
+            
+            // Le pasamos como parametros "false" para que no reproduzca el sonido de perder vida comun
+            administradorDeVidas.perderVida(false)  
+            game.sound("teclaBomba.mp3").play() 
+        }
+    }
+
+    override method pasarseDeLargo() {
+        if (not fueAtrapada) {
+            self.eliminarNota()
+        }
+    }
 }

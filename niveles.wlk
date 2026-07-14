@@ -8,7 +8,9 @@ import vidas.*
 
 class Fondo {
     const property image
+
     method position() = game.origin()
+    method esAtrapable() = false
 }
 
 class Nivel {
@@ -92,18 +94,56 @@ class Nivel {
     }
 
     method rutaImagen()
+
     method cargarNotas() {
-        const notasSpace = (1..10).map({ i => new TeclaSpace(position = game.at(19, 7)) })
-        const notasA     = (1..10).map({ i => new TeclaA(position = game.at(19, 6)) })
-        const notasW     = (1..10).map({ i => new TeclaW(position = game.at(19, 4)) })
-        const notasS     = (1..10).map({ i => new TeclaS(position = game.at(19, 3)) })
-        const notasD     = (1..10).map({ i => new TeclaD(position = game.at(19, 1)) })
-        
-        const todasLasNotas = notasSpace + notasA + notasW + notasS + notasD
-        
-        game.onTick(1000, "generador_notas", { self.lanzarTeclas(todasLasNotas) })
+        game.onTick(self.velocidadTics(), "generador_notas", { self.lanzarTeclaAleatoria() })
+    }
+
+    method lanzarTeclaAleatoria() {
+        if (contadorLetras < self.letrasMaximo()) {
+            const carril = [1, 2, 3, 4, 5].randomized().first()
+            const nuevaNota = self.crearNotaParaCarril(carril)
+
+            game.addVisual(nuevaNota)
+            notasEnPantalla.add(nuevaNota)
+            contadorLetras += 1
+        } else {
+            game.removeTickEvent("generador_notas")
+        }
+    }
+
+    // Método auxiliar para crear la nota específica según el carril seleccionado
+    method crearNotaParaCarril(carril) {
+        if (carril == 1) return self.crearNotaAleatoria(7, "space")
+        if (carril == 2) return self.crearNotaAleatoria(6, "a")
+        if (carril == 3) return self.crearNotaAleatoria(4, "w")
+        if (carril == 4) return self.crearNotaAleatoria(3, "s")
+        return self.crearNotaAleatoria(1, "d")
     }
     
+    // Método auxiliar para decidir si nace una tecla normal, una curativa o una bomba
+    method crearNotaAleatoria(y, tipo) {
+        const numeroAleatorio = (1..30).anyOne() 
+        
+        if (self.chanceCuracion().contains(numeroAleatorio)) { // Probabilidad Tecla Curativa
+            return new TeclaCurativa(position = game.at(19, y))
+        } else if (self.chanceBomba().contains(numeroAleatorio)) { // Probabilidad Tecla Bomba
+            return new TeclaBomba(position = game.at(19, y))
+        } else { // El resto teclas comunes
+            if (tipo == "space") return new TeclaSpace(position = game.at(19, y))
+            if (tipo == "a") return new TeclaA(position = game.at(19, y))
+            if (tipo == "w") return new TeclaW(position = game.at(19, y))
+            if (tipo == "s") return new TeclaS(position = game.at(19, y))
+            return new TeclaD(position = game.at(19, y))
+        }
+    }
+
+    method chanceCuracion()
+
+    method chanceBomba() 
+
+    method velocidadTics()
+
     method iniciarMusica() {
         self.cancion().shouldLoop(true)
         self.cancion().volume(0.5)
@@ -133,31 +173,49 @@ class Nivel {
 }
 
 object nivel1 inherits Nivel {
-    override method letrasMaximo() = 5
+    override method letrasMaximo() = 215
+
+    override method velocidadTics() = 1000
 
     override method rutaImagen() = "nivel1.jpg"
     
     const cancion = game.sound("nivel1.mp3") 
 
     override method cancion() = cancion
+
+    override method chanceCuracion() = 1..2
+    
+    override method chanceBomba() = 0..0
 }
 
 object nivel2 inherits Nivel {
-    override method letrasMaximo() = 200
+    override method letrasMaximo() = 280
+
+    override method velocidadTics() = 750
 
     override method rutaImagen() = "nivel2.jpg"
 
     const cancion = game.sound("nivel2.mp3")
 
     override method cancion() = cancion
+
+    override method chanceCuracion() = 1..1
+    
+    override method chanceBomba() = 2..3
 }
 
 object nivel3 inherits Nivel {
-    override method letrasMaximo() = 200
+    override method letrasMaximo() = 420
+
+    override method velocidadTics() = 500
 
     override method rutaImagen() = "nivel3.jpg"
 
     const cancion = game.sound("nivel3.mp3")
 
     override method cancion() = cancion
+
+    override method chanceCuracion() = 1..1
+    
+    override method chanceBomba() = 1..6
 }

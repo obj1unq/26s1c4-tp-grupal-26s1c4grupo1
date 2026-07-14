@@ -7,7 +7,9 @@ import menus.*
 
 object juego {
   const niveles = [nivel1, nivel2, nivel3] 
-  
+  var property nivelActual = null
+
+  const property musicaMenu = game.sound("guitar-hero.mp3")
   
   method iniciar() {
     game.cellSize(50)
@@ -25,8 +27,24 @@ object juego {
     menu.configurarMenu() 
   }
 
+  method iniciarMusicaMenu() {
+    if (!musicaMenu.played()) { 
+      musicaMenu.shouldLoop(true)
+      musicaMenu.volume(0.4)
+      game.schedule(1, { musicaMenu.play() })
+    }
+  }
+
+  method detenerMusicaMenu() {
+    if (musicaMenu.played()) {
+      musicaMenu.stop()
+    }
+  }
+
   method cargarNivel(nivel){
+    self.detenerMusicaMenu()
     const nivelElegido = niveles.get(nivel - 1)
+    nivelActual = nivelElegido
     nivelElegido.iniciar()
     nivelElegido.nivelActual(nivel)
     administradorDeVidas.nivelActual(nivel)

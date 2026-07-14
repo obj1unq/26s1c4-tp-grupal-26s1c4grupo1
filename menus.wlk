@@ -3,8 +3,6 @@ import wollok.game.*
 import juego.*
 
 class Menu {
-  const property musicaMenuPrincipal = game.sound("guitar-hero.mp3") 
-  
   method image()
   method position() = game.origin()
   method configurarMenu() {
@@ -16,9 +14,7 @@ object menuPrincipal inherits Menu {
   override method image() = "menuPrincipal.jpg"   
 
   override method configurarMenu() {
-    musicaMenuPrincipal.shouldLoop(true)
-    musicaMenuPrincipal.volume(0.4)
-    game.schedule(1, { musicaMenuPrincipal.play() })
+    juego.iniciarMusicaMenu()
     keyboard.num1().onPressDo({ juego.cargarElMenu(menuNiveles) game.sound("menuClick.mp3").play() })
     keyboard.num2().onPressDo({ juego.cargarElMenu(menuCreadores) game.sound("menuClick.mp3").play() })
   }
@@ -30,8 +26,8 @@ object menuNiveles inherits Menu{
   override method configurarMenu() {
     super()
     keyboard.num1().onPressDo({ juego.cargarNivel(1) game.sound("menuClick.mp3").play() })
-    keyboard.num2().onPressDo({ musicaMenuPrincipal.stop() juego.cargarNivel(2) game.sound("menuClick.mp3").play() })
-    keyboard.num3().onPressDo({ musicaMenuPrincipal.stop() juego.cargarNivel(3) game.sound("menuClick.mp3").play() })
+    keyboard.num2().onPressDo({ juego.cargarNivel(2) game.sound("menuClick.mp3").play() })
+    keyboard.num3().onPressDo({ juego.cargarNivel(3) game.sound("menuClick.mp3").play() })
   }
 }
 
