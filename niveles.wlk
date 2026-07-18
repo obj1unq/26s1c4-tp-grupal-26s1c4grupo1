@@ -191,7 +191,7 @@ object nivel2 inherits Nivel {
 
     override method chanceCuracion() = 1..1
     
-    override method chanceBomba() = 2..3
+    override method chanceBomba() = 1..3
 }
 
 object nivel3 inherits Nivel {
@@ -208,4 +208,20 @@ object nivel3 inherits Nivel {
     override method chanceCuracion() = 1..1
     
     override method chanceBomba() = 1..6
+}
+
+object nivelTutorial inherits Nivel {
+    override method letrasMaximo() = 25
+
+    override method velocidadTics() = 1500
+
+    override method rutaImagen() = "tutorial.jpg"
+
+    const cancion = game.sound("tutorial.mp3")
+
+    override method cancion() = cancion
+
+    override method chanceCuracion() = 1..10
+    
+    override method chanceBomba() = 0..0
 }

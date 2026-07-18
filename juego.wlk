@@ -6,7 +6,7 @@ import menus.*
 
 
 object juego {
-  const niveles = [nivel1, nivel2, nivel3] 
+  const niveles = [nivel1, nivel2, nivel3, nivelTutorial] 
   var property nivelActual = null
 
   const property musicaMenu = game.sound("guitar-hero.mp3")

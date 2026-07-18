@@ -17,6 +17,8 @@ object menuPrincipal inherits Menu {
     juego.iniciarMusicaMenu()
     keyboard.num1().onPressDo({ juego.cargarElMenu(menuNiveles) game.sound("menuClick.mp3").play() })
     keyboard.num2().onPressDo({ juego.cargarElMenu(menuCreadores) game.sound("menuClick.mp3").play() })
+    keyboard.i().onPressDo({ juego.cargarElMenu(menuInstrucciones) game.sound("menuClick.mp3").play() })
+    keyboard.t().onPressDo({ juego.cargarNivel(4) game.sound("menuClick.mp3").play() })
   }
 }
 
