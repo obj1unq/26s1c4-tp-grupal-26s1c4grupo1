@@ -34,9 +34,19 @@
 
 ## Instrucciones
 
-¡Intenta tocar la nota correcta cuando llegue al apartado izquierdo de la pantalla!
-¡Suma la mayor cantidad de puntos posibles!
-¡No toques las teclas bomba!
+- ¡Intenta tocar la nota correcta cuando llegue al apartado izquierdo de la pantalla!
+- ¡Suma la mayor cantidad de puntos posibles!
+- ¡No toques las teclas bomba!
+<br></br>
+
+## ¡Desafiante!
+- Hay 4 niveles!
+    - Tutorial
+    - Nivel 1 (Fácil)
+    - Nivel 2 (Medio)
+    - Nivel 3 (Difícil)
+- ¡Intenta superarlos!
+- ¡Cada nivel es más dificil que el anterior!
 
 
 ## Otros
