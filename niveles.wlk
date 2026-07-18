@@ -58,6 +58,7 @@ class Nivel {
         game.clear()
         juego.pausarMusicaNivel(nivelActual)
         const menuGanaste = new MenuGanaste(nivelActual = self.nivelActual())
+        game.sound("ganar.mp3").play()
         juego.cargarElMenu(menuGanaste)
     }
 
@@ -213,7 +214,7 @@ object nivel3 inherits Nivel {
 object nivelTutorial inherits Nivel {
     override method letrasMaximo() = 25
 
-    override method velocidadTics() = 1500
+    override method velocidadTics() = 2000
 
     override method rutaImagen() = "tutorial.jpg"
 
