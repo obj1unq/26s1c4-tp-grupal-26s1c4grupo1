@@ -37,7 +37,6 @@
 - ¡Intenta tocar la nota correcta cuando llegue al apartado izquierdo de la pantalla!
 - ¡Suma la mayor cantidad de puntos posibles!
 - ¡No toques las teclas bomba!
-<br></br>
 
 ## ¡Desafiante!
 - Hay 4 niveles!
