@@ -57,3 +57,13 @@ object menuCreadores inherits Menu{
   override method image() = "creadoresFinal.png"
   override method position() = game.origin()
 }
+
+object menuInstrucciones inherits Menu{
+  override method image() = "menuInstrucciones.png"
+  override method position() = game.origin()
+
+  override method configurarMenu() {
+    super()
+    keyboard.num1().onPressDo({ juego.cargarNivel(1) game.sound("menuClick.mp3").play() })
+  }
+}

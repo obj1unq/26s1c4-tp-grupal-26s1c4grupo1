@@ -5,6 +5,7 @@ import puntos.*
 import sectorDeAgarre.*
 import juego.*
 import vidas.*
+import carriles.*
 
 class Fondo {
     const property image
@@ -22,6 +23,7 @@ class Nivel {
     var contadorLetras = 0
     var property nivelActual = 0
     const property notasEnPantalla = []
+    const carriles = [carrilSpace, carrilA, carrilW, carrilS, carrilD]
 
     method iniciar(){
         game.clear()
@@ -101,8 +103,8 @@ class Nivel {
 
     method lanzarTeclaAleatoria() {
         if (contadorLetras < self.letrasMaximo()) {
-            const carril = [1, 2, 3, 4, 5].randomized().first()
-            const nuevaNota = self.crearNotaParaCarril(carril)
+            const carril = carriles.anyOne() 
+            const nuevaNota = self.crearNotaAleatoria(carril)
 
             game.addVisual(nuevaNota)
             notasEnPantalla.add(nuevaNota)
@@ -111,31 +113,19 @@ class Nivel {
             game.removeTickEvent("generador_notas")
         }
     }
-
-    // Método auxiliar para crear la nota específica según el carril seleccionado
-    method crearNotaParaCarril(carril) {
-        if (carril == 1) return self.crearNotaAleatoria(7, "space")
-        if (carril == 2) return self.crearNotaAleatoria(6, "a")
-        if (carril == 3) return self.crearNotaAleatoria(4, "w")
-        if (carril == 4) return self.crearNotaAleatoria(3, "s")
-        return self.crearNotaAleatoria(1, "d")
-    }
     
-    // Método auxiliar para decidir si nace una tecla normal, una curativa o una bomba
-    method crearNotaAleatoria(y, tipo) {
+    method crearNotaAleatoria(carril) {
         const numeroAleatorio = (1..30).anyOne() 
+        const posicion = game.at(19, carril.y())
         
-        if (self.chanceCuracion().contains(numeroAleatorio)) { // Probabilidad Tecla Curativa
-            return new TeclaCurativa(position = game.at(19, y))
-        } else if (self.chanceBomba().contains(numeroAleatorio)) { // Probabilidad Tecla Bomba
-            return new TeclaBomba(position = game.at(19, y))
-        } else { // El resto teclas comunes
-            if (tipo == "space") return new TeclaSpace(position = game.at(19, y))
-            if (tipo == "a") return new TeclaA(position = game.at(19, y))
-            if (tipo == "w") return new TeclaW(position = game.at(19, y))
-            if (tipo == "s") return new TeclaS(position = game.at(19, y))
-            return new TeclaD(position = game.at(19, y))
-        }
+        if (self.chanceCuracion().contains(numeroAleatorio)) { 
+            return new TeclaCurativa(position = posicion)
+        } 
+        if (self.chanceBomba().contains(numeroAleatorio)) { 
+            return new TeclaBomba(position = posicion)
+        } 
+        
+        return carril.crearTeclaComun(posicion)
     }
 
     method chanceCuracion()
